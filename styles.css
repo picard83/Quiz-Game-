@@ -1,0 +1,55 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ensure full viewport height */
+}
+
+.timer {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  margin: 15px;
+  margin-left: 20px;
+  padding-right: 15px;
+}
+
+.highscores {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  margin: 15px;
+  margin-left: 20px;
+}
+
+.quiz-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  padding: 20px;
+  background-color: #fdf4f4;
+  border: 2.5px solid #100d0d;
+  min-height: 300px;
+}
+
+.start-btn {
+  padding: 10px 20px;
+  margin-top: 20px; /* Optional: Add some top margin for better spacing */
+}
+
+/* .quiz-container {
+  width: 500px;
+  padding: 20px;
+  background-color: #fdf4f4;
+  border: 2.5px solid #100d0d;
+  height: 300px;
+}
+
+.start-btn {
+  padding: 10px 20px;
+  /* position: absolute; */
+/* margin: auto;
+} */
