@@ -2,24 +2,6 @@ const quizContainer = document.querySelector(".quiz-container");
 const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
 
-startBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  quizContainer.innerHTML = "";
-  let div = document.createElement("div");
-
-  div.innerHTML = `<p class='question1'> ${questions[0].question} </p>
-  <button class='answers'> ${questions[0].answers[0]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[1]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[2]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[3]}
-  </button>`;
-
-  quizContainer.append(div);
-});
-
 const questions = [
   //question 1
   {
@@ -92,3 +74,29 @@ const questions = [
     correctAnswer: "Bootstrap",
   },
 ];
+
+startBtn.addEventListener("click", function (e) {
+  quizContainer.innerHTML = "";
+  let div = document.createElement("div");
+  e.preventDefault();
+  div.innerHTML = `<p class='question1'> ${questions[0].question} </p>
+  <button class='answers'> ${questions[0].answers[0]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[1]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[2]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[3]}
+  </button>`;
+
+  if (e.target === questions[0].correctAnswer[0]) {
+    e.target.style.backgroundColor = "red";
+  }
+
+  quizContainer.append(div);
+});
+
+quizContainer.addEventListener("click", function (e) {
+  e.preventDefault();
+  target = e.target;
+});
