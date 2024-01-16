@@ -5,12 +5,22 @@ const startBtn = document.querySelector(".start-btn");
 startBtn.addEventListener("click", function (e) {
   e.preventDefault();
   quizContainer.innerHTML = "";
-  let p = document.createElement("p");
+  let div = document.createElement("div");
 
-  quizContainer.append(p);
+  div.innerHTML = `<p class='question1'> ${questions[0].question} </p>
+  <button class='answers'> ${questions[0].answers[0]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[1]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[2]}
+  </button><br>
+  <button class='answers'> ${questions[0].answers[3]}
+  </button>`;
+
+  quizContainer.append(div);
 });
 
-let questions = [
+const questions = [
   //question 1
   {
     question: "How many bones are in the human body ?",

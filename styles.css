@@ -66,3 +66,11 @@ body {
   height: 100px;
   width: 100px;
 }
+
+.question1 {
+  font-size: 20px;
+  font-weight: bold;
+}
+.answers {
+  margin: 5px 5px;
+}
