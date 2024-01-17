@@ -98,7 +98,7 @@ quizContainer.addEventListener("click", function (e) {
   e.preventDefault();
   if (e.target.innerText === questions[0].correctAnswer) {
     e.target.style.backgroundColor = "lightgreen";
-  } else {
+  } else if (e.target.classList.contains("answers")) {
     e.target.style.backgroundColor = "darkred";
   }
   console.log(e.target);
