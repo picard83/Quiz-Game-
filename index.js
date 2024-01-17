@@ -88,15 +88,18 @@ startBtn.addEventListener("click", function (e) {
   </button><br>
   <button class='answers'> ${questions[0].answers[3]}
   </button>`;
-
-  if (e.target === questions[0].correctAnswer[0]) {
-    e.target.style.backgroundColor = "red";
-  }
+  console.log(e.target);
 
   quizContainer.append(div);
 });
 
 quizContainer.addEventListener("click", function (e) {
+  // console.log(e.target);
   e.preventDefault();
-  target = e.target;
+  if (e.target.innerText === questions[0].correctAnswer) {
+    e.target.style.backgroundColor = "lightgreen";
+  } else {
+    e.target.style.backgroundColor = "darkred";
+  }
+  console.log(e.target);
 });
