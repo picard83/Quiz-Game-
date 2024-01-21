@@ -12,7 +12,7 @@ const questions = [
   //question 2
   {
     question: "What is the capitol of florida ?",
-    answers: ["Georgia", "France", "Tallahassee", "Palm Beach"],
+    answers: ["Georgia", "France", "Tallahassee", " West Palm Beach"],
     correctAnswer: "Tallahassee",
   },
   //question 3
@@ -79,6 +79,7 @@ startBtn.addEventListener("click", function (e) {
   quizContainer.innerHTML = "";
   let div = document.createElement("div");
   e.preventDefault();
+  //question 1
   div.innerHTML = `<p class='question1'> ${questions[0].question} </p>
   <button class='answers'> ${questions[0].answers[0]}
   </button><br>
@@ -88,18 +89,46 @@ startBtn.addEventListener("click", function (e) {
   </button><br>
   <button class='answers'> ${questions[0].answers[3]}
   </button>`;
-  console.log(e.target);
+  // console.log(e.target);
 
   quizContainer.append(div);
+
+  const answerChoices = document.querySelectorAll(".answers");
+
+  if (answerChoices.length > 0) {
+    answerChoices.forEach(function (answer) {
+      answer.addEventListener("click", function (e) {
+        // Add your logic for handling theal clicked answer here
+        //question 2
+        if (e.target.innerText === "206") {
+          console.log("thats right");
+          div.innerHTML = "";
+          div.innerHTML = `<p class='question1'> ${questions[1].question} </p>
+          <button class='answers'> ${questions[1].answers[0]}
+          </button><br>
+          <button class='answers'> ${questions[1].answers[1]}
+          </button><br>
+          <button class='answers'> ${questions[1].answers[2]}
+          </button><br>
+          <button class='answers'> ${questions[1].answers[3]}
+          </button>`;
+        } else {
+          console.log("thats the wrong answer");
+        }
+      });
+    });
+  } else {
+    console.error("No elements with class 'answers' found.");
+  }
 });
 
 quizContainer.addEventListener("click", function (e) {
   // console.log(e.target);
   e.preventDefault();
-  if (e.target.innerText === questions[0].correctAnswer) {
-    e.target.style.backgroundColor = "lightgreen";
-  } else if (e.target.classList.contains("answers")) {
-    e.target.style.backgroundColor = "darkred";
-  }
-  console.log(e.target);
+  // if (e.target.innerText === questions[(0, 1)].correctAnswer) {
+  //   e.target.style.backgroundColor = "lightgreen";
+  // } else if (e.target.classList.contains("answers")) {
+  //   e.target.style.backgroundColor = "darkred";
+  // }
+  // console.log(e.target);
 });
