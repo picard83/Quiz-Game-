@@ -1,6 +1,8 @@
 const quizContainer = document.querySelector(".quiz-container");
 const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
+let currentIndex = 0;
+let correctClicks = 0;
 
 const questions = [
   //question 1
@@ -40,7 +42,7 @@ const questions = [
   },
   // question 6
   {
-    question: "What number does Lebron James Wear ?",
+    question: "What number does Lebron James wear Currently ?",
     answers: ["24", "2", "23", "3 "],
     correctAnswer: "23",
   },
@@ -76,50 +78,8 @@ const questions = [
 ];
 
 startBtn.addEventListener("click", function (e) {
-  quizContainer.innerHTML = "";
-  let div = document.createElement("div");
   e.preventDefault();
-  //question 1
-  div.innerHTML = `<p class='question1'> ${questions[0].question} </p>
-  <button class='answers'> ${questions[0].answers[0]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[1]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[2]}
-  </button><br>
-  <button class='answers'> ${questions[0].answers[3]}
-  </button>`;
-  // console.log(e.target);
-
-  quizContainer.append(div);
-
-  const answerChoices = document.querySelectorAll(".answers");
-
-  if (answerChoices.length > 0) {
-    answerChoices.forEach(function (answer) {
-      answer.addEventListener("click", function (e) {
-        // Add your logic for handling theal clicked answer here
-        //question 2
-        if (e.target.innerText === "206") {
-          console.log("thats right");
-          div.innerHTML = "";
-          div.innerHTML = `<p class='question1'> ${questions[1].question} </p>
-          <button class='answers'> ${questions[1].answers[0]}
-          </button><br>
-          <button class='answers'> ${questions[1].answers[1]}
-          </button><br>
-          <button class='answers'> ${questions[1].answers[2]}
-          </button><br>
-          <button class='answers'> ${questions[1].answers[3]}
-          </button>`;
-        } else {
-          console.log("thats the wrong answer");
-        }
-      });
-    });
-  } else {
-    console.error("No elements with class 'answers' found.");
-  }
+  showQuiz();
 });
 
 quizContainer.addEventListener("click", function (e) {
@@ -130,5 +90,79 @@ quizContainer.addEventListener("click", function (e) {
   // } else if (e.target.classList.contains("answers")) {
   //   e.target.style.backgroundColor = "darkred";
   // }
-  // console.log(e.target);
 });
+
+function showQuiz() {
+  if (currentIndex > questions.length - 1) {
+    alert("Quiz is done!");
+    initialsInput();
+    return correctClicks;
+  }
+  quizContainer.innerHTML = "";
+  let div = document.createElement("div");
+
+  //question 1
+  div.innerHTML = `<p class='question1'> ${questions[currentIndex].question} </p>
+  <button class='answers'> ${questions[currentIndex].answers[0]}
+  </button><br>
+  <button class='answers'> ${questions[currentIndex].answers[1]}
+  </button><br>
+  <button class='answers'> ${questions[currentIndex].answers[2]}
+  </button><br>
+  <button class='answers'> ${questions[currentIndex].answers[3]}
+  </button>`;
+
+  // console.log(e.target);
+
+  quizContainer.append(div);
+
+  checkAnswers();
+}
+
+function checkAnswers() {
+  let answerChoices = document.querySelectorAll(".answers");
+
+  answerChoices.forEach(function (answer) {
+    answer.addEventListener("click", function (e) {
+      // Add your logic for handling theal clicked answer here
+      //question 2
+      if (e.target.innerText === questions[currentIndex].correctAnswer) {
+        // console.log("thats right");
+        correctClicks++;
+      } else {
+      }
+      currentIndex++;
+      showQuiz();
+    });
+  });
+}
+
+function initialsInput() {
+  if (currentIndex > questions.length - 1) {
+    quizContainer.innerText = " ";
+
+    let initials = document.createElement("INPUT");
+    let message = document.createElement("p");
+
+    message.innerText = "ENTER YOUR INITALS TO SAVE YOUR SCORE !";
+    message.style.textDecoration = "underline";
+    initials.setAttribute("type", "text");
+
+    quizContainer.append(message);
+    quizContainer.append(initials);
+
+    submittingInitalsAndScore();
+  }
+}
+
+function submittingInitalsAndScore() {
+  let sumbmitBtn = document.createElement("button");
+  sumbmitBtn.innerText = " SUBMIT ";
+  sumbmitBtn.style.marginTop = "15px";
+  sumbmitBtn.style.backgroundColor = "lightgreen";
+  quizContainer.append(sumbmitBtn);
+
+  sumbmitBtn.addEventListener("click", function () {
+    console.log(initials.value);
+  });
+}
