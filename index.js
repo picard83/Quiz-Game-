@@ -1,6 +1,8 @@
 const quizContainer = document.querySelector(".quiz-container");
 const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
+let initials = document.createElement("INPUT");
+let message = document.createElement("p");
 let currentIndex = 0;
 let correctClicks = 0;
 
@@ -140,9 +142,6 @@ function checkAnswers() {
 function initialsInput() {
   if (currentIndex > questions.length - 1) {
     quizContainer.innerText = " ";
-
-    let initials = document.createElement("INPUT");
-    let message = document.createElement("p");
 
     message.innerText = "ENTER YOUR INITALS TO SAVE YOUR SCORE !";
     message.style.textDecoration = "underline";
