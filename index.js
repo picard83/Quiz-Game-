@@ -1,6 +1,7 @@
 const quizContainer = document.querySelector(".quiz-container");
 const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
+const highScores = document.querySelector(".highscores");
 let initials = document.createElement("INPUT");
 let message = document.createElement("p");
 let currentIndex = 0;
@@ -96,8 +97,10 @@ quizContainer.addEventListener("click", function (e) {
 
 function showQuiz() {
   if (currentIndex > questions.length - 1) {
-    alert("Quiz is done!");
+    // alert("Quiz is done!");
     initialsInput();
+    storingScores();
+    getStorage();
     return correctClicks;
   }
   quizContainer.innerHTML = "";
@@ -162,6 +165,27 @@ function submittingInitalsAndScore() {
   quizContainer.append(sumbmitBtn);
 
   sumbmitBtn.addEventListener("click", function () {
-    console.log(initials.value);
+    console.log(initials.value, correctClicks.toString());
+    storingScores();
   });
+}
+
+function storingScores() {
+  let userScoreData = {
+    userInitials: initials.value,
+    score: correctClicks,
+  };
+
+  localStorage.setItem("userScore", JSON.stringify(userScoreData));
+}
+
+function getStorage() {
+  let storedUserScoreData = JSON.parse(localStorage.getItem("userScore"));
+
+  if (storedUserScoreData) {
+    console.log("User's Initials:", storedUserScoreData.userInitials);
+    console.log("User's Score:", storedUserScoreData.score);
+  } else {
+    console.log("No stored data found.");
+  }
 }
