@@ -6,7 +6,6 @@ let initials = document.createElement("INPUT");
 let message = document.createElement("p");
 let currentIndex = 0;
 let correctClicks = 0;
-
 const questions = [
   //question 1
   {
@@ -99,8 +98,7 @@ function showQuiz() {
   if (currentIndex > questions.length - 1) {
     // alert("Quiz is done!");
     initialsInput();
-    storingScores();
-    getStorage();
+
     return correctClicks;
   }
   quizContainer.innerHTML = "";
@@ -148,6 +146,7 @@ function initialsInput() {
 
     message.innerText = "ENTER YOUR INITALS TO SAVE YOUR SCORE !";
     message.style.textDecoration = "underline";
+    message.style.fontWeight = "bold";
     initials.setAttribute("type", "text");
 
     quizContainer.append(message);
@@ -162,11 +161,15 @@ function submittingInitalsAndScore() {
   sumbmitBtn.innerText = " SUBMIT ";
   sumbmitBtn.style.marginTop = "15px";
   sumbmitBtn.style.backgroundColor = "lightgreen";
+  sumbmitBtn.style.fontWeight = "bold";
   quizContainer.append(sumbmitBtn);
 
   sumbmitBtn.addEventListener("click", function () {
-    console.log(initials.value, correctClicks.toString());
+    // console.log(initials.value, correctClicks.toString());
     storingScores();
+    getStorage();
+    // console.log("storingscores");
+    // console.log("getstorage");
   });
 }
 
@@ -175,12 +178,20 @@ function storingScores() {
     userInitials: initials.value,
     score: correctClicks,
   };
+  // let userInitials = initials.value;
+  // let score = correctClicks;
+  itemId = "userScore ";
+  localStorage.setItem(itemId, JSON.stringify(userScoreData));
 
-  localStorage.setItem("userScore", JSON.stringify(userScoreData));
+  console.log(localStorage.key(2));
+
+  console.log(localStorage.getItem("cp"));
 }
 
 function getStorage() {
-  let storedUserScoreData = JSON.parse(localStorage.getItem("userScore"));
+  let storedUserScoreData = JSON.parse(localStorage.getItem("userScoreData"));
+
+  console.log(storedUserScoreData);
 
   if (storedUserScoreData) {
     console.log("User's Initials:", storedUserScoreData.userInitials);
@@ -189,3 +200,7 @@ function getStorage() {
     console.log("No stored data found.");
   }
 }
+
+highScores.addEventListener("click", function () {
+  quizContainer.innerHTML = " ";
+});
