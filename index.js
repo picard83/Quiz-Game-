@@ -100,6 +100,7 @@ function showQuiz() {
     initialsInput();
 
     return correctClicks;
+    storingScores();
   }
   quizContainer.innerHTML = "";
   let div = document.createElement("div");
@@ -167,9 +168,6 @@ function submittingInitalsAndScore() {
   sumbmitBtn.addEventListener("click", function () {
     // console.log(initials.value, correctClicks.toString());
     storingScores();
-    getStorage();
-    // console.log("storingscores");
-    // console.log("getstorage");
   });
 }
 
@@ -180,25 +178,14 @@ function storingScores() {
   };
   // let userInitials = initials.value;
   // let score = correctClicks;
-  itemId = "userScore ";
+  itemId = 0;
   localStorage.setItem(itemId, JSON.stringify(userScoreData));
 
-  console.log(localStorage.key(2));
-
-  console.log(localStorage.getItem("cp"));
-}
-
-function getStorage() {
-  let storedUserScoreData = JSON.parse(localStorage.getItem("userScoreData"));
-
-  console.log(storedUserScoreData);
-
-  if (storedUserScoreData) {
-    console.log("User's Initials:", storedUserScoreData.userInitials);
-    console.log("User's Score:", storedUserScoreData.score);
-  } else {
-    console.log("No stored data found.");
-  }
+  // console.log(localStorage.key(2));ß
+  console.log(localStorage.getItem(itemId));
+  let storedItem = localStorage.getItem("itemId");
+  console.log(storedItem);
+  console.log(localStorage.length);
 }
 
 highScores.addEventListener("click", function () {
