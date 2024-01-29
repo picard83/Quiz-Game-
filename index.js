@@ -100,8 +100,8 @@ function showQuiz() {
     initialsInput();
 
     return correctClicks;
-    storingScores();
   }
+  storingScores();
   quizContainer.innerHTML = "";
   let div = document.createElement("div");
 
@@ -164,10 +164,16 @@ function submittingInitalsAndScore() {
   sumbmitBtn.style.backgroundColor = "lightgreen";
   sumbmitBtn.style.fontWeight = "bold";
   quizContainer.append(sumbmitBtn);
+  let buttonClicked = false;
 
   sumbmitBtn.addEventListener("click", function () {
     // console.log(initials.value, correctClicks.toString());
     storingScores();
+    if (!buttonClicked) {
+      sumbmitBtn.disabled = true;
+      buttonClicked = true;
+    }
+    console.log();
   });
 }
 
@@ -176,18 +182,19 @@ function storingScores() {
     userInitials: initials.value,
     score: correctClicks,
   };
-  // let userInitials = initials.value;
-  // let score = correctClicks;
-  itemId = 0;
-  localStorage.setItem(itemId, JSON.stringify(userScoreData));
 
-  // console.log(localStorage.key(2));ß
-  console.log(localStorage.getItem(itemId));
-  let storedItem = localStorage.getItem("itemId");
-  console.log(storedItem);
-  console.log(localStorage.length);
+  itemId = localStorage.length;
+  localStorage.setItem(itemId, JSON.stringify(userScoreData));
 }
 
 highScores.addEventListener("click", function () {
-  quizContainer.innerHTML = " ";
+  for (let i = 1; i < localStorage.length; i++) {
+    let storedItem = localStorage.getItem(i);
+
+    // console.log(storedItem);
+
+    quizContainer.append(storedItem);
+  }
 });
+
+// localStorage.clear();
