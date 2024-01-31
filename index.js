@@ -6,6 +6,7 @@ let initials = document.createElement("INPUT");
 let message = document.createElement("p");
 let currentIndex = 0;
 let correctClicks = 0;
+
 const questions = [
   //question 1
   {
@@ -96,12 +97,11 @@ quizContainer.addEventListener("click", function (e) {
 
 function showQuiz() {
   if (currentIndex > questions.length - 1) {
-    // alert("Quiz is done!");
     initialsInput();
 
     return correctClicks;
   }
-  storingScores();
+
   quizContainer.innerHTML = "";
   let div = document.createElement("div");
 
@@ -149,7 +149,7 @@ function initialsInput() {
     message.style.textDecoration = "underline";
     message.style.fontWeight = "bold";
     initials.setAttribute("type", "text");
-
+    quizContainer.style.fontWeight = "bold";
     quizContainer.append(message);
     quizContainer.append(initials);
 
@@ -187,14 +187,30 @@ function storingScores() {
   localStorage.setItem(itemId, JSON.stringify(userScoreData));
 }
 
+//HIGHSCORES BTN FUNCTION
 highScores.addEventListener("click", function () {
+  quizContainer.innerHTML = " ";
+
+  //styling  highscores text
+  let highScoresHeading = document.createElement("h2");
+  highScoresHeading.textContent = "High Scores";
+  highScoresHeading.style.fontWeight = "bold";
+  highScoresHeading.style.marginBottom = "10px";
+  highScoresHeading.style.textDecoration = "underline";
+
+  // Append the heading to the quizContainer
+  quizContainer.appendChild(highScoresHeading);
+
   for (let i = 1; i < localStorage.length; i++) {
-    let storedItem = localStorage.getItem(i);
+    let storedItem = JSON.parse(localStorage.getItem(i));
 
-    // console.log(storedItem);
+    let scoreDiv = document.createElement("div");
+    scoreDiv.classList.add("score-item");
 
-    quizContainer.append(storedItem);
+    scoreDiv.style.fontWeight = "bold";
+    scoreDiv.style.marginBottom = "10px";
+    scoreDiv.textContent = `  ${storedItem.userInitials}: ${storedItem.score}`;
+
+    quizContainer.append(scoreDiv);
   }
 });
-
-// localStorage.clear();
