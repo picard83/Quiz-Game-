@@ -2,6 +2,7 @@ const quizContainer = document.querySelector(".quiz-container");
 const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
 const highScores = document.querySelector(".highscores");
+const restartBtn = document.querySelector(".restart-quiz");
 let initials = document.createElement("INPUT");
 let message = document.createElement("p");
 let currentIndex = 0;
@@ -187,11 +188,8 @@ function storingScores() {
   localStorage.setItem(itemId, JSON.stringify(userScoreData));
 }
 
-//HIGHSCORES BTN FUNCTION
 highScores.addEventListener("click", function () {
   quizContainer.innerHTML = " ";
-
-  //styling  highscores text
   let highScoresHeading = document.createElement("h2");
   highScoresHeading.textContent = "High Scores";
   highScoresHeading.style.fontWeight = "bold";
@@ -201,16 +199,27 @@ highScores.addEventListener("click", function () {
   // Append the heading to the quizContainer
   quizContainer.appendChild(highScoresHeading);
 
-  for (let i = 1; i < localStorage.length; i++) {
+  for (let i = 0; i < localStorage.length; i++) {
     let storedItem = JSON.parse(localStorage.getItem(i));
 
-    let scoreDiv = document.createElement("div");
-    scoreDiv.classList.add("score-item");
+    if (storedItem) {
+      // Check if storedItem is not null or undefined
+      let scoreDiv = document.createElement("div");
+      scoreDiv.classList.add("score-item"); // Add a class for styling
 
-    scoreDiv.style.fontWeight = "bold";
-    scoreDiv.style.marginBottom = "10px";
-    scoreDiv.textContent = `  ${storedItem.userInitials}: ${storedItem.score}`;
+      // Style the div element
+      scoreDiv.style.fontWeight = "bold";
+      scoreDiv.style.marginBottom = "10px";
+      scoreDiv.textContent = `  ${storedItem.userInitials}: ${storedItem.score}`;
 
-    quizContainer.append(scoreDiv);
+      quizContainer.append(scoreDiv);
+    }
   }
+});
+
+restartBtn.addEventListener("click", function () {
+  quizContainer.innerHTML = "";
+  currentIndex = 0;
+  correctClicks = 0;
+  showQuiz();
 });
