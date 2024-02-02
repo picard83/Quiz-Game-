@@ -26,6 +26,10 @@ body {
   margin-left: 20px;
 }
 
+.highscores:hover {
+  background-color: lightgreen;
+}
+
 .quiz-container {
   display: flex;
   flex-direction: column;
@@ -55,6 +59,7 @@ body {
   background-color: #0abc0a;
   border: 2.5px solid #100d0d;
   min-height: 300px;
+  margin: 5px 5px;
 }
 
 .greetingMssg {
@@ -75,13 +80,18 @@ body {
   margin: 5px 5px;
 }
 
+.answers:hover {
+  background-color: lightgreen;
+  font-weight: bold;
+}
+
 .score-item {
   background-color: lightgreen;
 }
 
 .restart-quiz {
   background-color: lightgreen;
-
+  display: none;
   position: fixed;
   top: 0;
   left: 50%;

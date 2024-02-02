@@ -3,10 +3,12 @@ const dynamicArea = document.getElementById("dynamic-area");
 const startBtn = document.querySelector(".start-btn");
 const highScores = document.querySelector(".highscores");
 const restartBtn = document.querySelector(".restart-quiz");
+const timer = document.querySelector(".timer span");
 let initials = document.createElement("INPUT");
 let message = document.createElement("p");
 let currentIndex = 0;
 let correctClicks = 0;
+let timerCount = 0;
 
 const questions = [
   //question 1
@@ -84,6 +86,7 @@ const questions = [
 startBtn.addEventListener("click", function (e) {
   e.preventDefault();
   showQuiz();
+  startTimer();
 });
 
 quizContainer.addEventListener("click", function (e) {
@@ -99,13 +102,13 @@ quizContainer.addEventListener("click", function (e) {
 function showQuiz() {
   if (currentIndex > questions.length - 1) {
     initialsInput();
+    restartBtnFunction();
 
     return correctClicks;
   }
 
   quizContainer.innerHTML = "";
   let div = document.createElement("div");
-
   //question 1
   div.innerHTML = `<p class='question1'> ${questions[currentIndex].question} </p>
   <button class='answers'> ${questions[currentIndex].answers[0]}
@@ -143,19 +146,17 @@ function checkAnswers() {
 }
 
 function initialsInput() {
-  if (currentIndex > questions.length - 1) {
-    quizContainer.innerText = " ";
+  quizContainer.innerText = " ";
 
-    message.innerText = "ENTER YOUR INITALS TO SAVE YOUR SCORE !";
-    message.style.textDecoration = "underline";
-    message.style.fontWeight = "bold";
-    initials.setAttribute("type", "text");
-    quizContainer.style.fontWeight = "bold";
-    quizContainer.append(message);
-    quizContainer.append(initials);
+  message.innerText = "ENTER YOUR INITALS TO SAVE YOUR SCORE !";
+  message.style.textDecoration = "underline";
+  message.style.fontWeight = "bold";
+  initials.setAttribute("type", "text");
+  quizContainer.style.fontWeight = "bold";
+  quizContainer.append(message);
+  quizContainer.append(initials);
 
-    submittingInitalsAndScore();
-  }
+  submittingInitalsAndScore();
 }
 
 function submittingInitalsAndScore() {
@@ -174,7 +175,6 @@ function submittingInitalsAndScore() {
       sumbmitBtn.disabled = true;
       buttonClicked = true;
     }
-    console.log();
   });
 }
 
@@ -199,26 +199,48 @@ highScores.addEventListener("click", function () {
   // Append the heading to the quizContainer
   quizContainer.appendChild(highScoresHeading);
 
+  let allStoredItems = [];
   for (let i = 0; i < localStorage.length; i++) {
     let storedItem = JSON.parse(localStorage.getItem(i));
-
     if (storedItem) {
-      // Check if storedItem is not null or undefined
-      let scoreDiv = document.createElement("div");
-      scoreDiv.classList.add("score-item"); // Add a class for styling
-
-      // Style the div element
-      scoreDiv.style.fontWeight = "bold";
-      scoreDiv.style.marginBottom = "10px";
-      scoreDiv.textContent = `  ${storedItem.userInitials}: ${storedItem.score}`;
-
-      quizContainer.append(scoreDiv);
+      allStoredItems.push(storedItem);
     }
   }
+  allStoredItems.sort((a, b) => b.score - a.score);
+
+  allStoredItems.forEach((storedItem) => {
+    let scoreDiv = document.createElement("div");
+    scoreDiv.classList.add("score-item");
+
+    // Style the div element
+    scoreDiv.style.fontWeight = "bold";
+    scoreDiv.style.marginBottom = "10px";
+    scoreDiv.textContent = `  ${storedItem.userInitials}: ${storedItem.score}`;
+
+    quizContainer.append(scoreDiv);
+  });
 });
 
+function startTimer() {
+  timerCount = 60;
+  timer.innerText = timerCount;
+
+  let timerId = setInterval(function () {
+    timerCount--;
+    timer.innerText = timerCount;
+
+    if (timerCount === 0 || currentIndex > questions.length - 1) {
+      clearInterval(timerId);
+      initialsInput();
+      restartBtnFunction();
+    }
+  }, 1000);
+}
+
+function restartBtnFunction() {
+  restartBtn.style.display = "inline";
+}
 restartBtn.addEventListener("click", function () {
-  quizContainer.innerHTML = "";
   currentIndex = 0;
   correctClicks = 0;
   showQuiz();
